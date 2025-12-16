@@ -7,3 +7,7 @@ I will make this project in Python, since that is my most fluent language right 
 
 I will have to make use of the requests library to GET and POST the data.
 -----------------------------------------------------------
+12-15-2025, 6:02 PM
+I made my first commit to my repository earlier around 5:50 PM.
+
+It seems like it won't be as similar to my weather app as I thought. I will probably have to make different constructs for each type of data (participant info, sessions, rounds). At least, this is what I am thinking of right now.
