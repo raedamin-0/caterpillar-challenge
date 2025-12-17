@@ -194,11 +194,17 @@ def main() -> None:
 
     final_output: list[Dict[str, Any]] = []
 
+    # Loop for building the final array of participant stats
     for participant in all_participants:
         stats = participant.get_participant_stats()
         final_output.append(stats)
 
-    final_output.sort(key=lambda x: x['name'])
+    final_output.sort(key=lambda x: x['name']) # Sorting it alphabetically by name
+
+    post_response = requests.post(url, json=final_output) # POSTing the data!
+
+    print(f"Status Code: {post_response.status_code}") # Two print statements to check the result of the POST
+    print(f"Response: {post_response.text}")
 
 if __name__ == "__main__":
     main()

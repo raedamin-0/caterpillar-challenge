@@ -47,3 +47,11 @@ I think the nested class method really went a long way here.
 Oh, and compartmentalizing the program into many different helper functions really helped here as well, reducing the coupling significantly. It is probably the reason why my code hasn't broke that much so far (and hopefully never!).
 
 It's a day before the due date, but let's see if I can finish this today.
+-----------------------------------------------------------
+12-17-2025, 3:52 PM
+
+Finished all of the code, POSTed the results, and was met with success! Probably took around 6 hours to complete (since I took breaks here and there). 
+
+Out of curiosity, I did a bit of digging, and it seems like this assessment was kind of like a ETL pipeline, or an application where data is extracted from a source, transformed into a usable format, and then loaded or stored into a database. Cool project!
+
+Definitely felt like a harder version of my weather app project. Good thing I had prior experience with APIs.
