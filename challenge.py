@@ -30,7 +30,7 @@ class Round:
         self.roundId: int = round_data['roundId']
         self.sessionId: int = round_data['sessionId']
         self.score: int = round_data['score']
-        self.startTime: int = round_data['score']
+        self.startTime: int = round_data['startTime']
         self.endTime: int = round_data['endTime']
 
     def get_duration(self) -> int:
@@ -50,13 +50,23 @@ class Session:
     def get_duration(self) -> int:
         return (self.endTime - self.startTime)
 
-    def get_average_score(self) -> float:
-        # Need an accumulator to calculate the average of the total score of all rounds
-        total_score = 0
+    def get_session_score(self) -> int:
+        # Need an accumulator to calculate the total score of all rounds
+        session_score = 0
         for r in self.rounds:
-            total_score = total_score + r.score
-        average_score = total_score / len(self.rounds)
-        return average_score
+            session_score += r.score
+        return session_score
+
+    def get_average_round_score(self) -> Optional[float]:
+        # Need an accumulator to calculate the average of the total score of all rounds
+        session_score = 0
+        for r in self.rounds:
+            session_score += r.score
+        if len(self.rounds) == 0:
+            return None # To catch a potential ZeroDivisionError
+        else:
+            average_round_score = session_score / len(self.rounds)
+        return average_round_score
 
 class Participant:
     # Initializing the statistics for the Participant data type.
@@ -67,8 +77,72 @@ class Participant:
 
         self.sessions: list[Session] = []
 
+    def get_average_total_round_score(self) -> Optional[float]:
+        # For calculating the average total score
+        total_score: int = 0
+        total_rounds: int = 0
+        for s in self.sessions:
+            total_score += s.get_session_score()
+            total_rounds += len(s.rounds)
+        if total_rounds == 0:
+            return None # To catch a potential ZeroDivisionError
+        else:
+            average_total_score = round(total_score / total_rounds, 2)
+        return average_total_score
+
+    def get_average_session_duration(self) -> Optional[float]:
+        # For calculating the average session duration
+        total_duration: int = 0
+        for s in self.sessions:
+            total_duration += s.get_duration()
+        average_session_duration = round(total_duration / len(self.sessions), 2)
+        return average_session_duration
+
+    def get_languages(self) -> list[Dict[str, Any]]:
+        languages: list[Dict[str, Any]] = []
+        rounds_for_languages: Dict[str, Any] = {}
+        
+        for s in self.sessions:
+            if s.language not in rounds_for_languages:
+                rounds_for_languages[s.language] = []
+            rounds_for_languages[s.language].extend(s.rounds) # Learned how to use .extend() instead of using another iterator here
+        
+        for language, rounds_list in rounds_for_languages.items(): # .items() to get both the key and values
+            language_total_score = 0
+            language_total_duration = 0
+            for r in rounds_list:
+                language_total_score += r.score
+                language_total_duration += r.get_duration()
+            language_average_score = round(language_total_score / len(rounds_list), 2)
+            language_average_duration = round(language_total_duration / len(rounds_list), 2)
+        
+            language_dict: Dict[str, Any] = {
+                "language": language,
+                "averageScore": language_average_score,
+                "averageRoundDuration": language_average_duration,
+                "totalScore": language_total_score # Need this for sorting the languages
+            }
+            languages.append(language_dict)
+
+        languages.sort(key=lambda x: x['totalScore'], reverse=True)
+        return languages
+
     def get_participant_stats(self) -> Dict[str, Any]:
-        return {} # Must implement later
+        if self.sessions == []:
+            return {
+            "id": self.participantId,
+            "name": self.name,
+            "languages": [],
+            "averageRoundScore": "N/A",
+            "averageSessionDuration": "N/A"
+            }
+        return {
+            "id": self.participantId,
+            "name": self.name,
+            "languages": self.get_languages(),
+            "averageRoundScore": self.get_average_total_round_score(),
+            "averageSessionDuration": self.get_average_session_duration()
+        }
 
 def main() -> None:
     """
@@ -123,6 +197,8 @@ def main() -> None:
     for participant in all_participants:
         stats = participant.get_participant_stats()
         final_output.append(stats)
+
+    final_output.sort(key=lambda x: x['name'])
 
 if __name__ == "__main__":
     main()

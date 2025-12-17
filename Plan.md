@@ -34,3 +34,16 @@ Ah, and it might be easier to sort a list alphabetically than a dictionary anywa
 12-17-2025, 12:43 PM
 
 Yeah, now I get it. The purpose of having the all_rounds and all_sessions be dictionaries is just so the program can grab the items by ID quickly for linking them together. That is no longer necessary by the time we get to the all_participants list, since now the structure is essentially being packaged. It is fully nested by that point. 
+-----------------------------------------------------------
+12-17-2025, 1:57 PM
+
+Initially, I was going to have the get_total_average() function be integrated into the get_participant_stats() function, but then I realized that it would be too bloated. There would be a bit too much coupling, and I could easily separate this aside into a helper function for ease of use and also in making it easier to understand.
+-----------------------------------------------------------
+12-17-2025, 3:26 PM
+
+I think that this is all starting to come together now. I just got to use the rounding function to round the averages to 2 decimal places as instructed.
+
+I think the nested class method really went a long way here. 
+Oh, and compartmentalizing the program into many different helper functions really helped here as well, reducing the coupling significantly. It is probably the reason why my code hasn't broke that much so far (and hopefully never!).
+
+It's a day before the due date, but let's see if I can finish this today.
