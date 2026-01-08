@@ -16,7 +16,7 @@ This repository consists of all the project files I used in my submission for th
     ```
 
 ## My thought process
-I approached this challenge as an ETL pipeline, similar to a weather app I previously built. Curiously, I only learned about the existence of ETL pipelines through this problem after a quick search. It is an application where data is extracted from a source, transformed into a usable format, and then loaded or stored into a database.
+I approached this challenge as an ETL pipeline, similar to a weather app I previously built. Interestingly enough, I only learned about the existence of ETL pipelines through this problem after a quick search. It is an application where data is extracted from a source, transformed into a usable format, and then loaded or stored into a database.
 
 Anyways, here is my general thought process summarized:
 
